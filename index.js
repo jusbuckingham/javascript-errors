@@ -69,3 +69,114 @@ try {
 }
 
 // Catching a SyntaxError
+try {
+    eval('hoo bar');
+} catch (e) {
+    console.error(e instanceof SyntaxError);
+    console.error(e.message);
+    console.error(e.name);
+    console.error(e.filename);
+    console.error(e.lineNumber);
+    console.error(e.columnNumber);
+    console.error(e.stack);
+}
+
+// Creating a SyntaxError
+try {
+    throw new SyntaxError('Hello', 'someFile.js', 10);
+} catch (e) {
+    console.error(e instanceof SyntaxError);  // true
+    console.error(e.message); // Hello
+    console.error(e.name); // SyntaxError
+    console.error(e.filename);  // someFile.js
+    console.error(e.lineNumber);  // 10
+    console.error(e.columnNumber);  // 0
+    console.error(e.stack);  // @debugger eva; code:3:9
+}
+
+// Catching a TypeError
+try {
+    null.f()
+} catch (e) {
+    console.log(e instanceof TypeError)  // true
+    console.log(e.message)  // "TypeError"
+    console.log(e.name)  // "TypeError"
+    console.log(e.filename)  // "Scratchpad/1"
+    console.log(e.lineNumber)  // 2
+    console.log(e.columnNumber)  // 2
+    console.log(e.stack)  // "@Scratchpad/2:2:3\n"
+}
+
+// Creating a TypeError
+try {
+    throw new TypeError('Hello', "someFile.js", 10)
+} catch (e) {
+    console.log(e instanceof TypeError)  // true
+    console.log(e.message)  // "Hello"
+    console.log(e.name)  // "TypeError"
+    console.log(e.filename)  // "someFile.js"
+    console.log(e.lineNumber)  // 10
+    console.log(e.columnNumber)  // 0
+    console.log(e.stack)  // "@Scratchpad/2:2:9\n"
+}
+
+// Catching an URIError
+try {
+    decodeURIComponent('%')
+} catch (e) {
+    console.log(e instanceof URIError)  // true
+    console.log(e.message)  // "malformed URI sequence"
+    console.log(e.name)  // "URIError"
+    console.log(e.filename)  // "Scratchpad/1"
+    console.log(e.lineNumber)  // 2
+    console.log(e.columnNumber)  // 2
+    console.log(e.stack)  // "@Scratch[ad/2:2:3\n"
+}
+
+// Creating an URIError
+
+try {
+    throw new URIError('Hello', 'someFile.js', 10)
+} catch (e) {
+    console.log(e instanceof URIError)  // true
+    console.log(e.message)  // "Hello"
+    console.log(e.name)  // "URIError"
+    console.log(e.filename)  // "someFile.js"
+    console.log(e.lineNumber)  // 10
+    console.log(e.columnNumber)  // 0
+    console.log(e.stack)  // "@Scratchpad/2:2:9\n"
+}
+
+// Catching an AggregateError
+Promise.any([
+    Promise.reject(new Error('some error')),
+]).catch(e => {
+    console.log(e instanceof AggregateError);  // true
+    console.log(e.message);  // "All Promises rejected"
+    console.log(e.name);  // "AggregateError"
+    console.log(e.errors);  // [ Error: "some error" ]
+});
+
+// Creating an AggregateError
+try {
+    throw new AggregateError([
+        new Error("some error"),
+    ]), 'Hello';
+} catch (e) {
+    console.log(e instanceof AggregateError); // true
+    console.log(e.message);  // "Hello"
+    console.log(e.name);  //"AggregateError"
+    console.log(e.errors);  // [ Error: "some error" ]
+}
+
+// Creating an Aggregate Error
+try {
+    throw new AggregateError([
+        new Error("some error"),
+    ], 'Hello');
+} catch (e) {
+    console.log(e instanceof AggregateError);  // true
+    console.log(e.message);  // "Hello"
+    console.log(e.name);  // "AggregateError"
+    console.log(e.errors);  //  [ Error: some error" ]
+}
