@@ -180,3 +180,6 @@ try {
     console.log(e.name);  // "AggregateError"
     console.log(e.errors);  //  [ Error: some error" ]
 }
+
+// Creating a new InternalError
+new InternalError("Engine failure");
