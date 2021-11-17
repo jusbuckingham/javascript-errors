@@ -182,4 +182,4 @@ try {
 }
 
 // Creating a new InternalError
-new InternalError("Engine failure");
+throw new InternalError("Engine failure");
